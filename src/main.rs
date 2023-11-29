@@ -25,10 +25,7 @@ fn main() {
                 Ok(_) => println!("[OK] libsql-stateless"),
                 Err(er) => println!("[ERR] [TAR] [libsql-stateless] {}", er)
             },
-            Err(er) => {
-                println!("[ERR] [TAR_URL] [libsql-stateless] {}", er);
-                continue
-            }
+            Err(er) => println!("[ERR] [TAR_URL] [libsql-stateless] {}", er)
         };
 
         match get_tarball_url(&npm_client, "libsql-stateless-easy") {
@@ -36,12 +33,9 @@ fn main() {
                 Ok(_) => println!("[OK] libsql-stateless-easy"),
                 Err(er) => println!("[ERR] [TAR] [libsql-stateless-easy]{}", er)
             },
-            Err(er) => {
-                println!("[ERR] [TAR_URL] [libsql-stateless-easy] {}", er);
-                continue
-            }
+            Err(er) => println!("[ERR] [TAR_URL] [libsql-stateless-easy] {}", er)
         };
-        
+
         wait_rand_sec();
     }
 }

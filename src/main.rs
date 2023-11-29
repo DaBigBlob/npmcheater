@@ -33,10 +33,10 @@ fn main() {
 
         match get_tarball_url(&npm_client, "libsql-stateless-easy") {
             Ok(tar) => match get_tarball(&npm_client, tar) {
-                Ok(_) => println!("[OK] libsql-stateless-easy"),
-                Err(er) => println!("[ERR] [TAR] [libsql-stateless-easy]{}", er)
+                Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless-easy)"),
+                Err(er) => log_err(LogRequestKing::Tar, "(libsql-stateless-easy)", er)
             },
-            Err(er) => println!("[ERR] [TAR_URL] [libsql-stateless-easy] {}", er)
+            Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless-easy)", er)
         };
 
         wait_rand_sec();

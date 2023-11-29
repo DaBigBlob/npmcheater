@@ -3,7 +3,6 @@ mod sleep;
 mod logs;
 
 use reqwest;
-use colored::Colorize;
 use utils::{get_tarball, get_tarball_url};
 use sleep::wait_rand_sec;
 use logs::{log_ok, LogRequestKing, log_err};

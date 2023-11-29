@@ -33,3 +33,11 @@ pub fn log_err(kind: LogRequestKing, pkg_name: &str, err: String) {
         err
     )
 }
+
+pub fn log_sleep(ms: u64) {
+    println!(
+        "{} {}",
+        "[SLEEPING]".bold().yellow(),
+        (ms.to_string()+"ms").dimmed()
+    )
+}

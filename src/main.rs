@@ -1,9 +1,12 @@
 mod utils;
 mod sleep;
+mod logs;
 
 use reqwest;
+use colored::Colorize;
 use utils::{get_tarball, get_tarball_url};
 use sleep::wait_rand_sec;
+use logs::{log_ok, LogRequestKing, log_err};
 
 fn main() {
     let npm_client = match reqwest::blocking::Client::builder()
@@ -22,10 +25,10 @@ fn main() {
     loop {
         match get_tarball_url(&npm_client, "libsql-stateless") {
             Ok(tar) => match get_tarball(&npm_client, tar) {
-                Ok(_) => println!("[OK] libsql-stateless"),
-                Err(er) => println!("[ERR] [TAR] [libsql-stateless] {}", er)
+                Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless)"),
+                Err(er) => log_err(LogRequestKing::Tar, "(libsql-stateless)", er)
             },
-            Err(er) => println!("[ERR] [TAR_URL] [libsql-stateless] {}", er)
+            Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless)", er)
         };
 
         match get_tarball_url(&npm_client, "libsql-stateless-easy") {

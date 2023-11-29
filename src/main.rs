@@ -20,32 +20,28 @@ fn main() {
     };
     
     loop {
-        let tarball1 = match get_tarball_url(&npm_client, "libsql-stateless") {
-            Ok(tar) => tar,
+        match get_tarball_url(&npm_client, "libsql-stateless") {
+            Ok(tar) => match get_tarball(&npm_client, tar) {
+                Ok(_) => println!("[OK] libsql-stateless"),
+                Err(er) => println!("[ERR] [TAR] [libsql-stateless] {}", er)
+            },
             Err(er) => {
                 println!("[ERR] [TAR_URL] [libsql-stateless] {}", er);
                 continue
             }
         };
 
-        let tarball2 = match get_tarball_url(&npm_client, "libsql-stateless-easy") {
-            Ok(tar) => tar,
+        match get_tarball_url(&npm_client, "libsql-stateless-easy") {
+            Ok(tar) => match get_tarball(&npm_client, tar) {
+                Ok(_) => println!("[OK] libsql-stateless-easy"),
+                Err(er) => println!("[ERR] [TAR] [libsql-stateless-easy]{}", er)
+            },
             Err(er) => {
                 println!("[ERR] [TAR_URL] [libsql-stateless-easy] {}", er);
                 continue
             }
         };
-
-        match get_tarball(&npm_client, tarball1) {
-            Ok(_) => println!("[OK] libsql-stateless"),
-            Err(er) => println!("[ERR] [TAR] [libsql-stateless] {}", er)
-        };
-
-        match get_tarball(&npm_client, tarball2) {
-            Ok(_) => println!("[OK] libsql-stateless-easy"),
-            Err(er) => println!("[ERR] [TAR] [libsql-stateless-easy]{}", er)
-        };
-
+        
         wait_rand_sec();
     }
 }

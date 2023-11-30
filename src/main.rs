@@ -20,11 +20,12 @@ fn main() {
             std::process::exit(2);
         }
     };
+    let mut count: usize = 1;
     
     loop {
         match get_tarball_url(&npm_client, "libsql-stateless") {
             Ok(tar) => match get_tarball(&npm_client, tar) {
-                Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless)"),
+                Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless)", count),
                 Err(er) => log_err(LogRequestKing::Tar, "(libsql-stateless)", er)
             },
             Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless)", er)
@@ -32,12 +33,13 @@ fn main() {
 
         match get_tarball_url(&npm_client, "libsql-stateless-easy") {
             Ok(tar) => match get_tarball(&npm_client, tar) {
-                Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless-easy)"),
+                Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless-easy)", count),
                 Err(er) => log_err(LogRequestKing::Tar, "(libsql-stateless-easy)", er)
             },
             Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless-easy)", er)
         };
 
         wait_rand_sec();
+        count = count.wrapping_add(1);
     }
 }

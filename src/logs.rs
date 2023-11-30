@@ -6,7 +6,7 @@ pub enum LogRequestKing {
     TarAndTarUrl
 }
 
-pub fn log_ok(kind: LogRequestKing, pkg_name: &str) {
+pub fn log_ok(kind: LogRequestKing, pkg_name: &str, count: usize) {
     println!(
         "{} {} {} {}",
         "[OK]".bold().green(),
@@ -16,7 +16,7 @@ pub fn log_ok(kind: LogRequestKing, pkg_name: &str) {
             LogRequestKing::TarAndTarUrl => "[TAR_URL+TAR]"
         }}.bold().cyan(),
         pkg_name.blue(),
-        "perfect".dimmed()
+        count.to_string().dimmed()
     )
 }
 

@@ -40,7 +40,7 @@ fn main() {
         Some(p) => p,
         None => [String::from("libsql-stateless"), String::from("libsql-stateless-easy")].to_vec()
     };
-    log_info("Running for packages: ".to_owned()+&pkgs.join(" "));
+    log_info("Running for packages: ".to_owned()+&pkgs.join(", "));
 
     //max deplay
     let max_delay = match args.max_sleep_mili {
@@ -77,6 +77,6 @@ fn main() {
     loop {
         pkgs.iter().for_each(|pkg| {fetch_pkg(&npm_client, pkg, logging)});
 
-        wait_rand_sec(max_delay);
+        wait_rand_sec(max_delay, logging);
     }
 }

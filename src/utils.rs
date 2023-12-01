@@ -50,9 +50,9 @@ fn get_tarball(client: &Client , tarball_url: String) -> Result<(), String> {
 pub fn fetch_pkg(client: &Client , pkg_name: &str) {
     match get_tarball_url(&client, pkg_name) {
         Ok(tar) => match get_tarball(&client, tar) {
-            Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless)"),
-            Err(er) => log_err(LogRequestKing::Tar, "(libsql-stateless)", er)
+            Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, pkg_name),
+            Err(er) => log_err(LogRequestKing::Tar, pkg_name, er)
         },
-        Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless)", er)
+        Err(er) => log_err(LogRequestKing::TarUrl, pkg_name, er)
     };
 }

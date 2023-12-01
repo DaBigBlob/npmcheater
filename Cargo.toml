@@ -10,7 +10,7 @@ license-file = "LICENSE"
 keywords = ["npmjs", "npm"]
 categories = ["command-line-utilities"]
 edition = "2021"
-exclude = ["builds/*"]
+exclude = ["builds/*", "build.sh"]
 
 [dependencies]
 rand = "0.8.5"

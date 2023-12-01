@@ -1,12 +1,14 @@
 mod utils;
 mod sleep;
 mod logs;
+mod headers;
 
 use logs::log_info;
 use reqwest;
 use clap::Parser;
 use utils::fetch_pkg;
 use sleep::wait_rand_sec;
+use headers::create_npm_headers;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -18,10 +20,7 @@ struct ClapCli {
     packages: Option<Vec<String>>,
 
     #[arg(short, long = "max-sleep-mili")]
-    max_sleep_mili: Option<u64>,
-
-    #[arg(short, long = "user-agent")]
-    user_agent: Option<String>
+    max_sleep_mili: Option<u64>
 }
 
 fn main() {
@@ -52,18 +51,8 @@ fn main() {
     };
     log_info("Max delay set to: ".to_owned()+&max_delay.to_string());
 
-    //user agent
-    let user_agent = match args.user_agent {
-        Some(ua) => ua,
-        None => String::from("npm/10.2.3 node/v21.2.0 darwin arm64 workspaces/false") //captured from wireshark
-    };
-    log_info("User Agent set to: ".to_owned()+&user_agent);
-
-    
-
     let npm_client = match reqwest::blocking::Client::builder()
-    .user_agent(user_agent)
-    .brotli(true)
+    .default_headers(create_npm_headers())
     .deflate(true)
     .gzip(true)
     .build() {

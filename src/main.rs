@@ -32,14 +32,14 @@ fn main() {
         Some(l) => l,
         None => true
     };
-    log_info("Logging set to: ".to_owned()+&logging.to_string());
+    if logging {log_info("Logging set to: ".to_owned()+&logging.to_string())};
 
     //pkgs
     let pkgs = match args.packages {
         Some(p) => p,
         None => [String::from("libsql-stateless"), String::from("libsql-stateless-easy")].to_vec()
     };
-    log_info("Running for packages: ".to_owned()+&pkgs.join(", "));
+    if logging {log_info("Running for packages: ".to_owned()+&pkgs.join(", "))};
 
     //max deplay
     let max_delay = match args.max_sleep_mili {
@@ -49,7 +49,7 @@ fn main() {
         },
         None => 3560
     };
-    log_info("Max delay set to: ".to_owned()+&max_delay.to_string());
+    if logging {log_info("Max delay set to: ".to_owned()+&max_delay.to_string())};
 
     let npm_client = match reqwest::blocking::Client::builder()
     .default_headers(create_npm_headers())

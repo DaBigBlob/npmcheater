@@ -3,10 +3,15 @@ Artificially bump the downloads of an npm package.
 
 ## Installing
 
+### Install from Crates.io
+Have Cargo Installed.
+```bash
+cargo install npmcheater
+```
 
 ### Build it yourself
 Have Cargo Installed.
-```
+```bash
 git clone https://github.com/DaBigBlob/npmcheater.git
 cd npmcheater
 cargo build --release

@@ -3,7 +3,6 @@ Artificially bump the downloads of an npm package.
 
 ## Installing
 
-
 ## Usage
 ```txt
 Usage: npmcheater [OPTIONS]
@@ -19,3 +18,4 @@ Options:
 
 ## Example
 `user@host ~# npmcheater -p libsql -p base64-js -p discord.js -m 5000 -s true`
+![demo output](https://raw.githubusercontent.com/DaBigBlob/npmcheater/main/demo.png)

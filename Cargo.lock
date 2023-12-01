@@ -534,8 +534,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "npmrunner"
-version = "0.1.0"
+name = "npmcheater"
+version = "0.2.1"
 dependencies = [
  "colored",
  "openssl",

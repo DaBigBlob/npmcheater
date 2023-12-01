@@ -15,6 +15,8 @@ Have Cargo Installed.
 git clone https://github.com/DaBigBlob/npmcheater.git
 cd npmcheater
 cargo build --release
+cp target/release/npmcheater .
+./npmcheater
 ```
 
 ## Usage

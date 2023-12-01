@@ -55,7 +55,7 @@ fn main() {
     //user agent
     let user_agent = match args.user_agent {
         Some(ua) => ua,
-        None => String::from("npm@10.2.0/node@v21.1.0+arm64 (darwin)")
+        None => String::from("npm/10.2.3 node/v21.2.0 darwin arm64 workspaces/false") //captured from wireshark
     };
     log_info("User Agent set to: ".to_owned()+&user_agent);
 

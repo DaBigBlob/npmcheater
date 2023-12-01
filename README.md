@@ -3,6 +3,15 @@ Artificially bump the downloads of an npm package.
 
 ## Installing
 
+
+### Build it yourself
+Have Cargo Installed.
+```
+git clone https://github.com/DaBigBlob/npmcheater.git
+cd npmcheater
+cargo build --release
+```
+
 ## Usage
 ```txt
 Usage: npmcheater [OPTIONS]

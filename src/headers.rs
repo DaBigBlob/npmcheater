@@ -1,29 +1,35 @@
-use reqwest::header::{HeaderMap, HOST, USER_AGENT, ACCEPT, CONNECTION};
+use reqwest::header::HeaderMap;
 
-// user-agent: npm/10.2.3 node/v21.2.0 darwin arm64 workspaces/false\r\n
-// pacote-version: 17.0.4\r\n
-// pacote-req-type: packument\r\n
-// pacote-pkg-id: registry:libsql-stateless\r\n
-// accept: application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*\r\n
-// npm-auth-type: web\r\n
-// npm-command: install\r\n
-// authorization: Bearer npm_tD8urGUsampleJmisamplepH6SgsamplevEa\r\n
-// Accept-Encoding: gzip,deflate\r\n
-// Host: registry.npmjs.org\r\n
-// connection: keep-alive\r\n
-// \r\n
+// "accept": "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*",
+// "accept-encoding": "gzip",
+// "connection": "Keep-Alive",
+// "host": "registry.npmjs.org",
+// "npm-in-ci": "false",
+// "npm-scope": "",
+// "npm-session": "911b7880c91cb9f1",
+// "pacote-pkg-id": "registry:libsql-stateless-easy",
+// "pacote-req-type": "packument",
+// "referer": "install libsql-stateless-easy",
+// "user-agent": "npm/6.14.15 node/v12.22.9 linux x64",
+// "x-forwarded-proto": "https",
+// "x-real-ip": "34.83.150.28"
 
 pub fn create_npm_headers() -> HeaderMap{
     let mut headers = HeaderMap::new();
 
-    headers.insert(USER_AGENT, "npm/10.2.3 node/v21.2.0 darwin arm64 workspaces/false".parse().unwrap());
-    headers.insert("pacote-version", "17.0.4".parse().unwrap());
+    headers.insert("accept", "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*".parse().unwrap());
+    headers.insert("accept-encoding", "gzip".parse().unwrap());
+    headers.insert("connection", "Keep-Alive".parse().unwrap());
+    headers.insert("host", "registry.npmjs.org".parse().unwrap());
+    headers.insert("npm-in-ci", "false".parse().unwrap());
+    headers.insert("npm-scope", "".parse().unwrap());
+    headers.insert("npm-session", "911b7880c91cb9f1".parse().unwrap());
+    headers.insert("pacote-pkg-id", "registry:libsql-stateless-easy".parse().unwrap());
     headers.insert("pacote-req-type", "packument".parse().unwrap());
-    headers.insert(ACCEPT, "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*".parse().unwrap());
-    headers.insert("npm-auth-type", "web".parse().unwrap());
-    headers.insert("npm-command", "install".parse().unwrap());
-    headers.insert(HOST, "registry.npmjs.org".parse().unwrap());
-    headers.insert(CONNECTION, "keep-alive".parse().unwrap());
-
+    headers.insert("referer", "install libsql-stateless-easy".parse().unwrap());
+    headers.insert("user-agent", "npm/6.14.15 node/v12.22.9 linux x64".parse().unwrap());
+    headers.insert("x-forwarded-proto", "https".parse().unwrap());
+    headers.insert("x-real-ip", "34.83.150.28".parse().unwrap());
+    
     return headers;
 }

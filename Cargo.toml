@@ -1,6 +1,8 @@
 [package]
 name = "npmcheater"
 version = "0.2.1"
+authors = ["DaBigBlob <research@0x000.io>"]
+description = ""
 edition = "2021"
 
 [dependencies]

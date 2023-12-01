@@ -10,8 +10,8 @@ use sleep::wait_rand_sec;
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 struct ClapCli {
-    #[arg(short, long)]
-    silent: Option<bool>,
+    // #[arg(short, long)]
+    // silent: Option<bool>,
 
     #[arg(short, long)]
     packages: Option<Vec<String>>,
@@ -26,11 +26,18 @@ struct ClapCli {
 
 fn main() {
     let args = ClapCli::parse();
+    //let pkgs = [String::from("libsql-stateless"), String::from("libsql-stateless-easy")];
 
     //user agent
     let user_agent = match args.user_agent {
         Some(ua) => ua,
         None => String::from("npm@10.2.0/node@v21.1.0+arm64 (darwin)")
+    };
+
+    //pkgs
+    let pkgs = match args.packages {
+        Some(p) => p,
+        None => [String::from("libsql-stateless"), String::from("libsql-stateless-easy")].to_vec()
     };
 
     let npm_client = match reqwest::blocking::Client::builder()
@@ -45,12 +52,11 @@ fn main() {
             std::process::exit(2);
         }
     };
-
-    let pkgs = ["libsql-stateless", "libsql-stateless-easy"];
     
     loop {
-        fetch_pkg(&npm_client, pkgs[0]);
-        fetch_pkg(&npm_client, pkgs[1]);
+        // fetch_pkg(&npm_client, pkgs[0]);
+        // fetch_pkg(&npm_client, pkgs[1]);
+        pkgs.iter(|pkg| {fetch_pkg(&npm_client, pkg)});
 
         wait_rand_sec(3560);
     }

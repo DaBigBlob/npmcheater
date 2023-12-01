@@ -28,17 +28,24 @@ fn main() {
     let args = ClapCli::parse();
     //let pkgs = [String::from("libsql-stateless"), String::from("libsql-stateless-easy")];
 
+    //pkgs
+    let pkgs = match args.packages {
+        Some(p) => p,
+        None => [String::from("libsql-stateless"), String::from("libsql-stateless-easy")].to_vec()
+    };
+
+    let max_delay = match args.max_sleep_mili {
+        Some(d) => d,
+        None => 3560
+    };
+
     //user agent
     let user_agent = match args.user_agent {
         Some(ua) => ua,
         None => String::from("npm@10.2.0/node@v21.1.0+arm64 (darwin)")
     };
 
-    //pkgs
-    let pkgs = match args.packages {
-        Some(p) => p,
-        None => [String::from("libsql-stateless"), String::from("libsql-stateless-easy")].to_vec()
-    };
+    
 
     let npm_client = match reqwest::blocking::Client::builder()
     .user_agent(user_agent)
@@ -54,10 +61,8 @@ fn main() {
     };
     
     loop {
-        // fetch_pkg(&npm_client, pkgs[0]);
-        // fetch_pkg(&npm_client, pkgs[1]);
-        pkgs.iter(|pkg| {fetch_pkg(&npm_client, pkg)});
+        pkgs.iter().for_each(|pkg| {fetch_pkg(&npm_client, pkg)});
 
-        wait_rand_sec(3560);
+        wait_rand_sec(max_delay);
     }
 }

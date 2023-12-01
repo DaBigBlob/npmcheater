@@ -38,6 +38,6 @@ fn main() {
             Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless-easy)", er)
         };
 
-        wait_rand_sec();
+        wait_rand_sec(3560);
     }
 }

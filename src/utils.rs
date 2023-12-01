@@ -39,7 +39,7 @@ fn get_tarball_url(client: &Client , pkg_name: &str) -> Result<String, String> {
 fn get_tarball(client: &Client , tarball_url: String) -> Result<(), String> {
     match client
     .get(tarball_url.as_str())
-    .headers(create_npm_headers(pkg_name))
+    .headers(create_npm_headers(""))
     .send() {
         Ok(res) => match res.status() {
             StatusCode::OK => return Ok(()),

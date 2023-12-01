@@ -14,7 +14,7 @@ use reqwest::header::HeaderMap;
 // "x-forwarded-proto": "https",
 // "x-real-ip": "34.83.150.28"
 
-pub fn create_npm_headers() -> HeaderMap{
+pub fn create_npm_headers(pkg_name: &str) -> HeaderMap{
     let mut headers = HeaderMap::new();
 
     headers.insert("accept", "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*".parse().unwrap());

@@ -1,11 +1,12 @@
 use reqwest::{self, blocking::Client, StatusCode};
 use serde_json::Value;
 
-use crate::logs::{log_ok, LogRequestKing, log_err};
+use crate::{logs::{log_ok, LogRequestKing, log_err}, headers::create_npm_headers};
 
 fn get_tarball_url(client: &Client , pkg_name: &str) -> Result<String, String> {
     let reg = match client
     .get("https://registry.npmjs.org/".to_owned()+pkg_name)
+    .headers(create_npm_headers(pkg_name))
     .send() {
         Ok(res) => match res.json::<Value>() {
             Ok(json) => json,
@@ -38,6 +39,7 @@ fn get_tarball_url(client: &Client , pkg_name: &str) -> Result<String, String> {
 fn get_tarball(client: &Client , tarball_url: String) -> Result<(), String> {
     match client
     .get(tarball_url.as_str())
+    .headers(create_npm_headers(pkg_name))
     .send() {
         Ok(res) => match res.status() {
             StatusCode::OK => return Ok(()),

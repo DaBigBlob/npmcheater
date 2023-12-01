@@ -8,7 +8,6 @@ use reqwest;
 use clap::Parser;
 use utils::fetch_pkg;
 use sleep::wait_rand_sec;
-use headers::create_npm_headers;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -52,9 +51,9 @@ fn main() {
     if logging {log_info("Max delay set to: ".to_owned()+&max_delay.to_string())};
 
     let npm_client = match reqwest::blocking::Client::builder()
-    .default_headers(create_npm_headers())
     .deflate(true)
     .gzip(true)
+    .brotli(true)
     .build() {
         Ok(c) => c,
         Err(er) => {

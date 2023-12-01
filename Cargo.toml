@@ -15,7 +15,7 @@ exclude = ["builds/*", "build.sh"]
 
 [dependencies]
 rand = "0.8.5"
-reqwest = {version = "0.11.22", features = ["blocking", "json", "gzip", "deflate"]}
+reqwest = {version = "0.11.22", features = ["blocking", "json", "gzip", "brotli", "deflate"]}
 serde_json = "1.0.108"
 openssl = { version = "0.10", features = ["vendored"] }
 colored = "2.0.4"

@@ -47,12 +47,12 @@ fn get_tarball(client: &Client , tarball_url: String) -> Result<(), String> {
     }
 }
 
-pub fn fetch_pkg(client: &Client , pkg_name: &str) {
+pub fn fetch_pkg(client: &Client , pkg_name: &str, logging: bool) {
     match get_tarball_url(&client, pkg_name) {
         Ok(tar) => match get_tarball(&client, tar) {
-            Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, pkg_name),
-            Err(er) => log_err(LogRequestKing::Tar, pkg_name, er)
+            Ok(_) => if logging {log_ok(LogRequestKing::TarAndTarUrl, pkg_name)},
+            Err(er) => if logging {log_err(LogRequestKing::Tar, pkg_name, er)}
         },
-        Err(er) => log_err(LogRequestKing::TarUrl, pkg_name, er)
+        Err(er) => if logging {log_err(LogRequestKing::TarUrl, pkg_name, er)}
     };
 }

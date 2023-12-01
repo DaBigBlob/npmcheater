@@ -35,7 +35,10 @@ fn main() {
     };
 
     let max_delay = match args.max_sleep_mili {
-        Some(d) => d,
+        Some(d) => match d {
+            0 => 1,
+            dd => dd
+        },
         None => 3560
     };
 

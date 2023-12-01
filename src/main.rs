@@ -2,6 +2,7 @@ mod utils;
 mod sleep;
 mod logs;
 
+use logs::log_info;
 use reqwest;
 use clap::Parser;
 use utils::fetch_pkg;
@@ -32,12 +33,14 @@ fn main() {
         Some(l) => l,
         None => true
     };
+    log_info("Logging set to: ".to_owned()+&logging.to_string());
 
     //pkgs
     let pkgs = match args.packages {
         Some(p) => p,
         None => [String::from("libsql-stateless"), String::from("libsql-stateless-easy")].to_vec()
     };
+    log_info("Running for packages: ".to_owned()+&pkgs.join(" "));
 
     //max deplay
     let max_delay = match args.max_sleep_mili {
@@ -47,12 +50,14 @@ fn main() {
         },
         None => 3560
     };
+    log_info("Max delay set to: ".to_owned()+&max_delay.to_string());
 
     //user agent
     let user_agent = match args.user_agent {
         Some(ua) => ua,
         None => String::from("npm@10.2.0/node@v21.1.0+arm64 (darwin)")
     };
+    log_info("User Agent set to: ".to_owned()+&user_agent);
 
     
 

@@ -6,6 +6,14 @@ pub enum LogRequestKing {
     TarAndTarUrl
 }
 
+pub fn log_info(info: String) {
+    println!(
+        "{} {}",
+        "[INFO]".bold().bright_purple(),
+        info
+    )
+}
+
 pub fn log_ok(kind: LogRequestKing, pkg_name: &str) {
     println!(
         "{} {} ({})",

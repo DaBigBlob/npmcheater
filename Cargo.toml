@@ -2,9 +2,15 @@
 name = "npmcheater"
 version = "0.2.1"
 authors = ["DaBigBlob <research@0x000.io>"]
-description = ""
+description = "Artificially bump the downloads of an npm package."
 repository = "https://github.com/DaBigBlob/npmcheater"
+homepage = "https://github.com/DaBigBlob/npmcheater"
+license = "BSD-3-Clause"
+license-file = "LICENSE"
+keywords = ["npmjs", "npm"]
+categories = ["command-line-utilities"]
 edition = "2021"
+exclude = ["builds/*"]
 
 [dependencies]
 rand = "0.8.5"

@@ -1,7 +1,9 @@
 use reqwest::{self, blocking::Client, StatusCode};
 use serde_json::Value;
 
-pub fn get_tarball_url(client: &Client , pkg_name: &str) -> Result<String, String> {
+use crate::logs::{log_ok, LogRequestKing, log_err};
+
+fn get_tarball_url(client: &Client , pkg_name: &str) -> Result<String, String> {
     let reg = match client
     .get("https://registry.npmjs.org/".to_owned()+pkg_name)
     .send() {
@@ -33,7 +35,7 @@ pub fn get_tarball_url(client: &Client , pkg_name: &str) -> Result<String, Strin
     }
 }
 
-pub fn get_tarball(client: &Client , tarball_url: String) -> Result<(), String> {
+fn get_tarball(client: &Client , tarball_url: String) -> Result<(), String> {
     match client
     .get(tarball_url.as_str())
     .send() {
@@ -43,4 +45,14 @@ pub fn get_tarball(client: &Client , tarball_url: String) -> Result<(), String> 
         },
         Err(e) => return Err(e.to_string())
     }
+}
+
+pub fn fetch_pkg(client: &Client , pkg_name: &str) {
+    match get_tarball_url(&client, pkg_name) {
+        Ok(tar) => match get_tarball(&client, tar) {
+            Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless)"),
+            Err(er) => log_err(LogRequestKing::Tar, "(libsql-stateless)", er)
+        },
+        Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless)", er)
+    };
 }

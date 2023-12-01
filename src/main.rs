@@ -3,9 +3,8 @@ mod sleep;
 mod logs;
 
 use reqwest;
-use utils::{get_tarball, get_tarball_url};
+use utils::fetch_pkg;
 use sleep::wait_rand_sec;
-use logs::{log_ok, LogRequestKing, log_err};
 
 fn main() {
     let npm_client = match reqwest::blocking::Client::builder()
@@ -20,23 +19,12 @@ fn main() {
             std::process::exit(2);
         }
     };
+
+    let pkgs = ["libsql-stateless", "libsql-stateless-easy"];
     
     loop {
-        match get_tarball_url(&npm_client, "libsql-stateless") {
-            Ok(tar) => match get_tarball(&npm_client, tar) {
-                Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless)"),
-                Err(er) => log_err(LogRequestKing::Tar, "(libsql-stateless)", er)
-            },
-            Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless)", er)
-        };
-
-        match get_tarball_url(&npm_client, "libsql-stateless-easy") {
-            Ok(tar) => match get_tarball(&npm_client, tar) {
-                Ok(_) => log_ok(LogRequestKing::TarAndTarUrl, "(libsql-stateless-easy)"),
-                Err(er) => log_err(LogRequestKing::Tar, "(libsql-stateless-easy)", er)
-            },
-            Err(er) => log_err(LogRequestKing::TarUrl, "(libsql-stateless-easy)", er)
-        };
+        fetch_pkg(&npm_client, pkgs[0]);
+        fetch_pkg(&npm_client, pkgs[1]);
 
         wait_rand_sec(3560);
     }

@@ -1,6 +1,6 @@
 [package]
 name = "npmcheater"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["DaBigBlob <research@0x000.io>"]
 description = "Artificially bump the downloads of an npm package."
 repository = "https://github.com/DaBigBlob/npmcheater"

@@ -8,7 +8,7 @@ pub enum LogRequestKing {
 
 pub fn log_ok(kind: LogRequestKing, pkg_name: &str) {
     println!(
-        "{} {} {}",
+        "{} {} ({})",
         "[OK]".bold().green(),
         {match kind {
             LogRequestKing::Tar => "[TAR]",
@@ -21,7 +21,7 @@ pub fn log_ok(kind: LogRequestKing, pkg_name: &str) {
 
 pub fn log_err(kind: LogRequestKing, pkg_name: &str, err: String) {
     println!(
-        "{} {} {} {}",
+        "{} {} ({}) {}",
         "[ERR]".bold().red(),
         {match kind {
             LogRequestKing::Tar => "[TAR]",

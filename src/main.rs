@@ -1,70 +1,31 @@
-mod utils;
-mod sleep;
-mod logs;
+
+mod cli;
+mod queue;
+mod fetcher;
 mod headers;
-
-use logs::log_info;
-use reqwest;
-use clap::Parser;
-use utils::fetch_pkg;
-use sleep::wait_rand_sec;
-
-#[derive(Parser)]
-#[command(author, version, about, long_about = None)]
-struct ClapCli {
-    #[arg(short, long = "show-logs")]
-    show_logs: Option<bool>,
-
-    #[arg(short, long)]
-    packages: Option<Vec<String>>,
-
-    #[arg(short, long = "max-sleep-mili")]
-    max_sleep_mili: Option<u64>
-}
+mod logger;
+mod sleep;
 
 fn main() {
-    let args = ClapCli::parse();
-    //let pkgs = [String::from("libsql-stateless"), String::from("libsql-stateless-easy")];
+    let args = cli::Args::parse();
+    let client = &fetcher::client();
+    let queue = queue::init(args.packages(), client);
 
-    //logs
-    let logging = match args.show_logs {
-        Some(l) => l,
-        None => true
-    };
-    if logging {log_info("Logging set to: ".to_owned()+&logging.to_string())};
-
-    //pkgs
-    let pkgs = match args.packages {
-        Some(p) => p,
-        None => [String::from("libsql-stateless"), String::from("libsql-stateless-easy")].to_vec()
-    };
-    if logging {log_info("Running for packages: ".to_owned()+&pkgs.join(", "))};
-
-    //max deplay
-    let max_delay = match args.max_sleep_mili {
-        Some(d) => match d {
-            0 => 1,
-            dd => dd
-        },
-        None => 3560
-    };
-    if logging {log_info("Max delay set to: ".to_owned()+&max_delay.to_string())};
-
-    let npm_client = match reqwest::blocking::Client::builder()
-    .deflate(true)
-    .gzip(true)
-    .brotli(true)
-    .build() {
-        Ok(c) => c,
-        Err(er) => {
-            print!("{}", er.to_string());
-            std::process::exit(2);
-        }
-    };
-    
     loop {
-        pkgs.iter().for_each(|pkg| {fetch_pkg(&npm_client, pkg, logging)});
+        queue.iter().for_each(|elm| {
+            match fetcher::TarDist::get(&elm.pkg(), &client, elm.tar_url()) {
+                Ok(d) => {
+                    log::info!("url fetched for {}", elm.pkg());
+                    match fetcher::TarBall::get(d.url(), &client, elm.tar_ball()) {
+                        Ok(_) => log::info!("tarball fetched for {}", elm.pkg()),
+                        Err(_) => log::warn!("tarball for {} could not be fetched", elm.pkg())
+                    };
+                },
+                Err(_) => log::warn!("url for {} could not be fetched", elm.pkg())
+            };
 
-        wait_rand_sec(max_delay, logging);
+        });
+
+        sleep::wait_rand_sec(args.delay());
     }
 }

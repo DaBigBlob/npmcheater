@@ -10,6 +10,7 @@ fn main() {
     let args = cli::Args::parse();
     let client = &fetcher::client();
     let queue = queue::init(args.packages(), client);
+    let mut rsleep = sleep::Rand::init(args.delay());
 
     loop {
         queue.iter().for_each(|elm| {
@@ -26,6 +27,6 @@ fn main() {
 
         });
 
-        sleep::wait_rand_sec(args.delay());
+        rsleep.sleep();
     }
 }

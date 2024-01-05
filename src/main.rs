@@ -19,10 +19,10 @@ fn main() {
                     log::info!("url fetched for {}", elm.pkg());
                     match fetcher::TarBall::get(d.url(), client, elm.tar_ball()) {
                         Ok(_) => log::info!("tarball fetched for {}", elm.pkg()),
-                        Err(_) => log::warn!("tarball for {} could not be fetched", elm.pkg())
+                        Err(e) => log::warn!("tarball for {} could not be fetched: {}", elm.pkg(), e)
                     };
                 },
-                Err(_) => log::warn!("url for {} could not be fetched", elm.pkg())
+                Err(e) => log::warn!("url for {} could not be fetched: {}", elm.pkg(), e)
             };
 
         });

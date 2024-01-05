@@ -1,5 +1,5 @@
 # npmcheater
-Artificially bump the downloads of an npm package.
+Perfectly emulates npm and "installs" the specified packages to bump the download count.
 
 ## Installing
 
@@ -35,5 +35,5 @@ Options:
 ```
 
 ## Example
-`user@host ~# npmcheater -p libsql -p base64-js -p discord.js -m 5000 -s true`
+`user@host ~# npmcheater -p libsql -p base64-js -p discord.js -m 5000 -s`
 ![demo output](./demo.png)

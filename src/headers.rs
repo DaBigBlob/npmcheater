@@ -1,3 +1,4 @@
+use log::debug;
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 
 macro_rules! headermap {
@@ -40,6 +41,7 @@ pub fn tar_url(pkg: &str) -> HeaderMap{
         .unwrap_or(shv!("registry:libsql-stateless"))
     );
     hdr.insert(shn!("pacote-req-type"), shv!("packument"));
+    debug!("{}: {:#?}\n", pkg, hdr);
     hdr
 }
 
@@ -57,5 +59,6 @@ pub fn tar_ball(url: &str, hash: &str) -> HeaderMap{
         .unwrap_or(shv!("remote:libsql-stateless@https://registry.npmjs.org/libsql-stateless/-/libsql-stateless-2.7.4.tgz"))
     );
     hdr.insert(shn!("pacote-req-type"), shv!("tarball"));
+    debug!("{}: {:#?}\n", url, hdr);
     hdr
 }

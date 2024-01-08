@@ -3,8 +3,8 @@ pub fn init(logging: bool) {
     match simple_logger::SimpleLogger::new()
         .without_timestamps()
         .with_colors(true)
-        .env()
         .with_level(log::LevelFilter::Info)
+        .env()
         .without_timestamps()
         .init() {
             Err(e) => if !logging {println!("ERROR INITIATING LOGGER: {}", e)},

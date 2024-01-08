@@ -1,3 +1,4 @@
+use log::debug;
 use reqwest::{blocking::Client, StatusCode, header::HeaderMap};
 use serde_json::Value;
 
@@ -80,7 +81,11 @@ impl TarDist {
 }
 pub fn try_till_get_tar_dist(pkg: &str, client: &Client) -> TarDist {
     match TarDist::get(pkg, client, crate::headers::tar_url(pkg)) {
-        Ok(td) => td,
+        Ok(td) => {
+            debug!("setting hash for {}: {}", pkg, td.hash());
+            debug!("setting url for {}: {}", pkg, td.url());
+            td
+        },
         Err(_) => try_till_get_tar_dist(pkg, client)
     }
 }

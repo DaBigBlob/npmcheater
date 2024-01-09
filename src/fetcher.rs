@@ -24,7 +24,11 @@ pub struct TarDist {
 impl TarDist {
     pub fn get(pkg: &str, client: &Client, headers: HeaderMap) -> Result<TarDist, String> {
         let reg = match client
-        .get("https://registry.npmjs.org/".to_owned()+pkg)
+        .get({
+            let url = "https://registry.npmjs.org/".to_owned()+pkg;
+            debug!("url is {}", url);
+            url
+        })
         .headers(headers)
         .send() {
             Ok(res) => match res.json::<Value>() {

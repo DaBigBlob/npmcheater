@@ -34,13 +34,14 @@ impl TarDist {
             Err(_) => return Err(String::from("could not fetch tarball url"))
         };
 
-        debug!("{:#?}", reg);
-
         let dist = match reg.get("versions") {
             Some(v) => match v.as_object() {
                 Some(obj) => match obj.values().last() {
                     Some(lst) => match lst.get("dist") {
-                        Some(dist) => dist,
+                        Some(dist) => {
+                            debug!("dist: {:#?}", dist);
+                            dist
+                        },
                         None => return Err(String::from("no dist in latest pkg"))
                     },
                     None => return Err(String::from("could not get latest from packages"))

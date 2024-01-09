@@ -34,6 +34,8 @@ impl TarDist {
             Err(_) => return Err(String::from("could not fetch tarball url"))
         };
 
+        debug!("{:#?}", reg);
+
         let dist = match reg.get("versions") {
             Some(v) => match v.as_object() {
                 Some(obj) => match obj.values().last() {

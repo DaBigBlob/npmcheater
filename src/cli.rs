@@ -53,7 +53,7 @@ impl Args {
             },
             None => {
                 log::warn!("--max-sleep-mili not set; using default max sleep of 3560ms");
-                100
+                6000
             }
         };
 
